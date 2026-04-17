@@ -2,10 +2,24 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import BountyModal from './components/BountyModal'
 import './App.css'
+
+interface BountyData {
+  issueUrl: string;
+  bountyAmount: number;
+  description: string;
+  deadline: string;
+}
 
 function App() {
   const [count, setCount] = useState(0)
+  const [isBountyModalOpen, setIsBountyModalOpen] = useState(false)
+
+  const handleBountySubmit = (bountyData: BountyData) => {
+    console.log('Bounty created:', bountyData)
+    // Here you would typically send the data to your backend
+  }
 
   return (
     <>
@@ -26,6 +40,12 @@ function App() {
           onClick={() => setCount((count) => count + 1)}
         >
           Count is {count}
+        </button>
+        <button
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md mt-4 transition-colors"
+          onClick={() => setIsBountyModalOpen(true)}
+        >
+          Create Bounty
         </button>
       </section>
 
@@ -114,6 +134,12 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+
+      <BountyModal
+        isOpen={isBountyModalOpen}
+        onClose={() => setIsBountyModalOpen(false)}
+        onSubmit={handleBountySubmit}
+      />
     </>
   )
 }
